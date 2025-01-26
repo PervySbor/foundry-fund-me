@@ -13,18 +13,12 @@ contract DeployFundMe is Script {
         address ethToUsdtPriceFeed = helperConfig.activeNetworkConfig();
         //as everything before vm.startBroadcast() is calculated localy and not send as a transaction
         vm.startBroadcast();
-        console.log(
-            "deployFundMe's address (from the inside): %s",
-            address(this)
-        );
+        console.log("deployFundMe's address (from the inside): %s", address(this));
         console.log("msg.sender in DeployFundMe: %s", msg.sender);
         //FundMe fundMe = new FundMe(0x694AA1769357215DE4FAC081bf1f309aDC325306);
 
         FundMe fundMe = new FundMe(ethToUsdtPriceFeed);
-        console.log(
-            "FundMe's balance (inside deployment script): %s",
-            address(fundMe).balance
-        );
+        console.log("FundMe's balance (inside deployment script): %s", address(fundMe).balance);
         //console.log("fundMe's owner: %s", fundMe.owner());
         vm.stopBroadcast();
         return fundMe;

@@ -27,16 +27,12 @@ contract FundMeTestIntegration is Test {
     function testUserCanFundInteractions() external {
         console.log("FundMETestIntegration's address: %s", address(this));
         console.log("fundFundMe's address: %s", address(fundFundMe));
-        console.log(
-            "USER's address: %s, USER's balance: %e",
-            USER,
-            USER.balance
-        );
+        console.log("USER's address: %s, USER's balance: %e", USER, USER.balance);
         vm.prank(USER);
         fundFundMe.fundFundMe{value: SEND_VALUE}(address(fundMe));
-        (uint256 amount, ) = fundMe.getTxInfoByAddress(address(fundFundMe));
+        (uint256 amount,) = fundMe.getTxInfoByAddress(address(fundFundMe));
         console.log("amount sent by %s is %s", address(fundFundMe), amount);
-        (amount, ) = fundMe.getTxInfoByAddress(address(fundFundMe));
+        (amount,) = fundMe.getTxInfoByAddress(address(fundFundMe));
         console.log("amount sent by %s is %s", USER, amount);
         //transaction is intended to be performed by USER
         //checking contract address's transaction just in case
@@ -53,11 +49,7 @@ contract FundMeTestIntegration is Test {
     function testUserCanWithdrawIntegrations() external fundedInteractions {
         uint256 userBalanceStart = msg.sender.balance;
         uint256 fundMeBalanceStart = address(fundMe).balance;
-        console.log(
-            "userBalanceStart: %s, fundMeBalanceStart: %s",
-            userBalanceStart,
-            fundMeBalanceStart
-        );
+        console.log("userBalanceStart: %s, fundMeBalanceStart: %s", userBalanceStart, fundMeBalanceStart);
 
         console.log("tryng to withdraw from: %s", address(fundMe));
 
@@ -65,11 +57,7 @@ contract FundMeTestIntegration is Test {
 
         uint256 userBalanceEnd = msg.sender.balance;
         uint256 fundMeBalanceEnd = address(fundMe).balance;
-        console.log(
-            "userBalanceEnd: %s, fundMeBalanceEnd: %s",
-            userBalanceEnd,
-            fundMeBalanceEnd
-        );
+        console.log("userBalanceEnd: %s, fundMeBalanceEnd: %s", userBalanceEnd, fundMeBalanceEnd);
         assertEq(userBalanceStart + SEND_VALUE, userBalanceEnd);
         assertEq(fundMeBalanceStart - SEND_VALUE, fundMeBalanceEnd);
     }

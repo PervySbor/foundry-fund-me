@@ -75,17 +75,17 @@ contract FundMeTest is Test, ZkSyncChainChecker {
 
     modifier funded(address sender, uint256 amount) {
         vm.prank(sender);
-        (bool sent, ) = address(fundMe).call{value: amount}("");
+        (bool sent,) = address(fundMe).call{value: amount}("");
         console.logBool(sent);
         _;
     }
 
     function testTx() public funded(USER, 2e18) funded(address(this), 1e18) {
         console.log("Test contract address: %s", address(this));
-        (uint256 amount, ) = fundMe.getTxInfoByAddress(address(this));
+        (uint256 amount,) = fundMe.getTxInfoByAddress(address(this));
         console.logUint(amount);
         assertEq(amount, 1e18);
-        (amount, ) = fundMe.getTxInfoByAddress(USER);
+        (amount,) = fundMe.getTxInfoByAddress(USER);
         console.logUint(amount);
         assertEq(amount, 2e18);
     }
@@ -98,10 +98,7 @@ contract FundMeTest is Test, ZkSyncChainChecker {
     }
 
     function testWithdrawSingleFunder() public funded(USER, 1e18) {
-        console.log(
-            "test contract balance before transactions: %s",
-            fundMe.getOwner().balance
-        );
+        console.log("test contract balance before transactions: %s", fundMe.getOwner().balance);
         //Arrange
         uint256 startingOwnerBalance = fundMe.getOwner().balance;
         uint256 startingFundMeBalance = address(fundMe).balance;
@@ -111,10 +108,7 @@ contract FundMeTest is Test, ZkSyncChainChecker {
         uint256 gasStart = gasleft();
         vm.prank(fundMe.getOwner()); //just to make sure
         fundMe.withdraw();
-        console.log(
-            "test contract balance after transactions: %s",
-            fundMe.getOwner().balance
-        );
+        console.log("test contract balance after transactions: %s", fundMe.getOwner().balance);
 
         uint256 gasLeft = gasleft();
         uint256 gasUsed = (gasStart - gasLeft) * tx.gasprice;
@@ -124,10 +118,7 @@ contract FundMeTest is Test, ZkSyncChainChecker {
         uint256 endingOwnerBalance = fundMe.getOwner().balance;
         uint256 endingFundMeBalance = address(fundMe).balance;
         assertEq(endingFundMeBalance, 0);
-        assertEq(
-            startingOwnerBalance + startingFundMeBalance,
-            endingOwnerBalance
-        );
+        assertEq(startingOwnerBalance + startingFundMeBalance, endingOwnerBalance);
     }
 
     function testWithdrawFromMultipleFunders() public {
@@ -135,7 +126,7 @@ contract FundMeTest is Test, ZkSyncChainChecker {
         uint160 numberOfFunders = 10;
         for (uint160 i = 0; i < numberOfFunders; i++) {
             hoax(address(i + 1));
-            (bool sent, ) = address(fundMe).call{value: 1e18}("");
+            (bool sent,) = address(fundMe).call{value: 1e18}("");
             if (!sent) {
                 console.log("transaction N %s failed", i);
             }
@@ -160,10 +151,7 @@ contract FundMeTest is Test, ZkSyncChainChecker {
         uint256 endingOwnerBalance = fundMe.getOwner().balance;
         uint256 endingFundMeBalance = address(fundMe).balance;
         assertEq(endingFundMeBalance, 0);
-        assertEq(
-            endingOwnerBalance,
-            startingOwnerBalance + startingFundMeBalance
-        );
+        assertEq(endingOwnerBalance, startingOwnerBalance + startingFundMeBalance);
     }
 
     function testWithdrawFromMultipleFundersCheaper() public {
@@ -172,7 +160,7 @@ contract FundMeTest is Test, ZkSyncChainChecker {
         console.log("starting fundMe balance: %s", address(fundMe).balance);
         for (uint160 i = 0; i < numberOfFunders; i++) {
             hoax(address(i + 1));
-            (bool sent, ) = address(fundMe).call{value: 1e18}("");
+            (bool sent,) = address(fundMe).call{value: 1e18}("");
             if (!sent) {
                 console.log("transaction N %s failed", i);
             }
@@ -196,9 +184,6 @@ contract FundMeTest is Test, ZkSyncChainChecker {
         uint256 endingOwnerBalance = fundMe.getOwner().balance;
         uint256 endingFundMeBalance = address(fundMe).balance;
         assertEq(endingFundMeBalance, 0);
-        assertEq(
-            endingOwnerBalance,
-            startingOwnerBalance + startingFundMeBalance
-        );
+        assertEq(endingOwnerBalance, startingOwnerBalance + startingFundMeBalance);
     }
 }

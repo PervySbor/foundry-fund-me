@@ -36,30 +36,22 @@ contract HelperConfig is Script {
         //does everything related to Sepolia
         //price feed address
         //and so on...
-        NetworkConfig memory sepoliaConfig = NetworkConfig({
-            priceFeed: 0x694AA1769357215DE4FAC081bf1f309aDC325306
-        });
+        NetworkConfig memory sepoliaConfig = NetworkConfig({priceFeed: 0x694AA1769357215DE4FAC081bf1f309aDC325306});
         return sepoliaConfig;
     }
 
     function getMainnetEthConfig() public pure returns (NetworkConfig memory) {
-        NetworkConfig memory sepoliaConfig = NetworkConfig({
-            priceFeed: 0xEe9F2375b4bdF6387aa8265dD4FB8F16512A1d46
-        });
+        NetworkConfig memory sepoliaConfig = NetworkConfig({priceFeed: 0xEe9F2375b4bdF6387aa8265dD4FB8F16512A1d46});
         return sepoliaConfig;
     }
 
     function getArbitrumEthConfig() public pure returns (NetworkConfig memory) {
-        NetworkConfig memory sepoliaConfig = NetworkConfig({
-            priceFeed: 0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612
-        });
+        NetworkConfig memory sepoliaConfig = NetworkConfig({priceFeed: 0x639Fe6ab55C921f74e7fac1ee960C0B6293ba612});
         return sepoliaConfig;
     }
 
     function getBNBChainEthConfig() public pure returns (NetworkConfig memory) {
-        NetworkConfig memory sepoliaConfig = NetworkConfig({
-            priceFeed: 0x9ef1B8c0E4F7dc8bF5719Ea496883DC6401d5b2e
-        });
+        NetworkConfig memory sepoliaConfig = NetworkConfig({priceFeed: 0x9ef1B8c0E4F7dc8bF5719Ea496883DC6401d5b2e});
         return sepoliaConfig;
     }
 
@@ -69,15 +61,10 @@ contract HelperConfig is Script {
         }
 
         vm.startBroadcast();
-        MockV3Aggregator mockPriceFeed = new MockV3Aggregator(
-            DECIMALS,
-            INITIAL_PRICE
-        );
+        MockV3Aggregator mockPriceFeed = new MockV3Aggregator(DECIMALS, INITIAL_PRICE);
         vm.stopBroadcast();
 
-        NetworkConfig memory anvilConfig = NetworkConfig({
-            priceFeed: address(mockPriceFeed)
-        });
+        NetworkConfig memory anvilConfig = NetworkConfig({priceFeed: address(mockPriceFeed)});
         return anvilConfig;
     }
 }

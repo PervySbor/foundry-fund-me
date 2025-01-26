@@ -16,19 +16,14 @@ contract FundFundMe is Test {
 
     function fundFundMe(address _mostRecentlyDeployed) public payable {
         //fundMe = FundMe(_mostRecentlyDeployed);
-        (bool sent, ) = address(payable(_mostRecentlyDeployed)).call{
-            value: SEND_VALUE
-        }("");
+        (bool sent,) = address(payable(_mostRecentlyDeployed)).call{value: SEND_VALUE}("");
         console.log("trying to send from address: %s", msg.sender);
         console.log("sent status: %s, sent value: %e", sent, SEND_VALUE);
     }
 
     function run() external {
         console.log("trying to fund the most recently deployed contract");
-        address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment(
-            "FundMe",
-            block.chainid
-        );
+        address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment("FundMe", block.chainid);
         console.log("current FundMe address: %s", mostRecentlyDeployed);
         vm.startBroadcast();
         fundFundMe(mostRecentlyDeployed);
@@ -45,13 +40,8 @@ contract WithdrawFundMe is Test {
     }
 
     function run() external {
-        console.log(
-            "trying to withdraw from the most recently deployed contract"
-        );
-        address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment(
-            "FundMe",
-            block.chainid
-        );
+        console.log("trying to withdraw from the most recently deployed contract");
+        address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment("FundMe", block.chainid);
         console.log("current FundMe address: %s", mostRecentlyDeployed);
 
         withdrawFundMe(mostRecentlyDeployed);
