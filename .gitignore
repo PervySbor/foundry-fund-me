@@ -12,3 +12,9 @@ docs/
 
 # Dotenv file
 .env
+tmp.md
+
+broadcast/
+
+.DS_Store
+zkout/
