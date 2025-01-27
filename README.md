@@ -2,6 +2,14 @@
 
 **My first Solidity project**
 
+## Quickstart 
+
+```
+git clone https://github.com/PervySbor/foundry-fund-me
+cd foundry-fund-me
+make
+```
+
 ## Scripts
 
 ### Deployment
@@ -99,7 +107,7 @@ cast call <your_contract_address> "function(uint256)" 123 (--rpc-url <your_rpc_u
 ```
 
 ## Testing
-***Warning! Tests may not work properly in some networks. They're approved to run in BNB Chain and in Anvil. However, something goes wrong while testing in Sepolia.**
+***Warning! Tests may not work properly in some networks. They're approved to run in ETH Mainnet, BNB Chain and in Anvil. However, something goes wrong while testing in Sepolia.**
 
 
 ### General test
